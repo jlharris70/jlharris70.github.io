@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tip Calculator from https://www.youtube.com/watch?v=upopiaxdOfg</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+</head>
+<body>
+    <ons-page>
+        <ons-toolbar>
+            <dive class="center">Tip Calculator</dive>
+        </ons-toolbar>
+        <section style="padding: 8px;">
+            <div style="margin-bottom: 20px;">
+                <input class="text-input text-input--material" placeholder="Bill Amount" type="text" style="width: 100%" required id="billAmount">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <ons-range style="width: 75%;" value="15" min="0" max="50" step=".5" id="tipRange">
+                </ons-range>
+                <output id="percentOut">15%</output>
+            </div>
+            <div> <ons-button modifier="large" id="btnCalculate">Calculate Tip</ons-button> </div>
+        </section>
+        <section style="padding: 8px;">
+            <output id="results"></output>
+        </section>
+    </ons-page> 
+    <script src="tip.js"></script>
+</body>
+</html>
