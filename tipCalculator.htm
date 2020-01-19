@@ -16,10 +16,10 @@
         </ons-toolbar>
         <section style="padding: 8px; font-size: 36px;">
             <div style="margin-bottom: 30px;">
-                <input class="text-input text-input--material" placeholder="Bill Amount" type="text" pattern="\d*" style="width: 100%; height: 40px; font-size: 36px;" required id="billAmount">
+                <input class="text-input text-input--material" placeholder="Bill Amount" type="number" pattern="[0-9]*" style="width: 100%; height: 40px; font-size: 36px;" required id="billAmount">
             </div>
             <div style="margin-bottom: 20px;">
-                <ons-range style="width: 75%;" value="15" min="0" max="50" step=".1" id="tipRange">
+                <ons-range style="width: 65%;" value="15" min="0" max="50" step=".1" id="tipRange">
                 </ons-range>
                 <output id="percentOut">15%</output>
             </div>
