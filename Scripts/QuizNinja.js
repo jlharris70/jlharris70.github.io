@@ -4,8 +4,8 @@ const quiz = [
               { name: "Batman",realName: "Bruce Wayne" },
             ];
 
-// View Object
 const view = {
+  start: document.getElementById('start'),
   score: document.querySelector('#score strong'),
   question: document.getElementById('question'),
   result: document.getElementById('result'),
@@ -15,20 +15,26 @@ const view = {
         target.setAttribute(key, attributes[key]);
       }
       target.innerHTML = content;
+  },
+  show(element){
+      element.style.display = 'block';
+  },
+  hide(element){
+      element.style.display = 'none';
   }
 };
 
-// Game Object
 const game = {
   start(quiz){
     this.score = 0;
     this.questions = [...quiz];
-    // main game loop
+    view.hide(view.start);
+
     for(const question of this.questions){
       this.question = question;
       this.ask();
     }
-    // end of main game loop
+
     this.gameOver();
   },
   ask(){
@@ -51,7 +57,10 @@ const game = {
   },
   gameOver(){
     view.render(view.info,`Game Over, you scored ${this.score} point${this.score !== 1 ? 's' : ''}`);
+    view.show(view.start);
   }
 }
 
 game.start(quiz);
+
+view.start.addEventListener('click', () => game.start(quiz), false);
