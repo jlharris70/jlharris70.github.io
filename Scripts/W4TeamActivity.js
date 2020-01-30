@@ -2,10 +2,8 @@ let player = 1;
 
 function clearBoard() {
     player = 1;
-    document.getElementById('p1').style.backgroundColor = "darkgray";
-    document.getElementById('p1').style.color = "white";
-    document.getElementById('p2').style.backgroundColor = "lightgray";
-    document.getElementById('p2').style.color = "black";
+    document.getElementById('p1').style.backgroundColor = "lightgray";
+    document.getElementById('p2').style.backgroundColor = "darkgray";
     for (j = 1; j < 10; j++) {
         document.getElementById('s'+j).innerHTML = "";
         document.getElementById('s'+j).value = "0";
@@ -18,17 +16,13 @@ function clearBoard() {
 function switchPlayer() {
     if(player == 1){
         player = 2;
-        document.getElementById('p2').style.backgroundColor = "darkgray";
-        document.getElementById('p2').style.color = "white";
-        document.getElementById('p1').style.backgroundColor = "lightgray";
-        document.getElementById('p1').style.color = "black";
+        document.getElementById('p2').style.backgroundColor = "lightgray";
+        document.getElementById('p1').style.backgroundColor = "darkgray";
     }
     else {
         player = 1;
-        document.getElementById('p1').style.backgroundColor = "darkgray";
-        document.getElementById('p1').style.color = "white";
-        document.getElementById('p2').style.backgroundColor = "lightgray";
-        document.getElementById('p2').style.color = "black";
+        document.getElementById('p1').style.backgroundColor = "lightgray";
+        document.getElementById('p2').style.backgroundColor = "darkgray";
     }   
 }
 
