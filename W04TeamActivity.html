@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Week 4 Team Activity</title>
+    <link rel="stylesheet" href="Styles/W4TeamActivity.css">
+</head>
+<body onload="clearBoard()">
+    <div id="win"></div>
+    <table class="player">
+        <tr>
+            <td id="p1">Player 1</td>
+            <td id="p2">Player 2</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td id="s1" onclick="placeMark('s1')"></td>
+            <td id="s2" onclick="placeMark('s2')"></td>
+            <td id="s3" onclick="placeMark('s3')"></td>
+        </tr>
+        <tr>
+            <td id="s4" onclick="placeMark('s4')"></td>
+            <td id="s5" onclick="placeMark('s5')"></td>
+            <td id="s6"  onclick="placeMark('s6')"></td>
+        </tr>
+        <tr>
+            <td id="s7" onclick="placeMark('s7')"></td>
+            <td id="s8" onclick="placeMark('s8')"></td>
+            <td id="s9" onclick="placeMark('s9')"></td>
+        </tr>
+        <tr>
+            <td id="ten">
+                <button type="reset" onclick="clearBoard()">Reset Game</button>
+            </td>
+        </tr>
+        
+    </table>
+    <script src="Scripts/W4TeamActivity.js"></script>
+</body>
+</html>

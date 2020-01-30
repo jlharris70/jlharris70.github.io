@@ -1,0 +1,71 @@
+body {
+    background-color: blue;
+}
+
+table {
+    background-color: blue;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+
+td {
+    width: 7em;
+    max-width: 7em;
+    height: 7em;
+    max-height: 7em;
+    text-align: center;
+    vertical-align: center ;
+    background-color: lightblue;
+}
+#s1 {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+#s3 {
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+}
+#s5 {
+    border: 1px solid black;
+}
+#s7 {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+}
+#s9 {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#ten {
+    padding-top: 10px;
+    background-color: blue;
+    height: 5px;
+}
+
+.player {
+    background-color: blue;
+}
+
+#p1 {
+    background-color: darkgray;
+    color: white;
+    height: 5px;
+}
+#p2 {
+    background-color: lightgray;
+    color: black;
+    height: 5px;
+}
+
+#win {
+    background-color: gold;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+button {
+    width: 14.3em;
+    font-size: 24px;
+}
