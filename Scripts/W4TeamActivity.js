@@ -80,7 +80,7 @@ function checkForWin() {
         document.getElementById("s7").style.backgroundColor = "green";
         document.getElementById("s7").style.color = "white";
         document.getElementById("s8").style.backgroundColor = "green";
-        document.getElementById("s").style.color = "white";
+        document.getElementById("s8").style.color = "white";
         document.getElementById("s9").style.backgroundColor = "green";
         document.getElementById("s9").style.color = "white";
     }
@@ -108,7 +108,7 @@ function checkForWin() {
         document.getElementById("s3").style.color = "white";
         document.getElementById("s6").style.backgroundColor = "green";
         document.getElementById("s6").style.color = "white";
-        document.getElementById("s8").style.backgroundColor = "green";
+        document.getElementById("s9").style.backgroundColor = "green";
         document.getElementById("s9").style.color = "white";
     }
     else if(a != 0 && a == e && a == i) {
