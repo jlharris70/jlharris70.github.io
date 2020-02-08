@@ -1,0 +1,70 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: cornflowerblue;
+}
+
+a {
+    text-decoration: none;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: rgb(115, 168, 36);
+    justify-content: center;
+  }
+  
+.flex-container > div {
+    background-color: #f1f1f1;
+    margin: 10px;
+    padding: 20px;
+    font-size: 30px;
+  }
+
+img {
+    max-width: 100%;
+    max-height: auto;
+  }
+
+#pic {
+    background-color:  rgb(115, 168, 36);
+    padding: 0px;
+    max-width: 60%;
+  }
+
+#description {
+    background-color:  rgb(115, 168, 36);
+    font-size: 14px;
+    padding: 5px;
+    margin-top: 25px;
+  }
+
+#title {
+    text-align: center;
+    padding: 1px;
+    font-size: 24px;
+  }
+
+#hike_name {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background-color:  rgb(115, 168, 36);
+  }
+
+#label {
+    font-weight: bold;
+}
+
+#dist, #diff {
+    color: red;
+}
+
+p {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+#reading {
+    background-color: white;
+}
