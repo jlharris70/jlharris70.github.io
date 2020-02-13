@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="Styles/todo.css">
+</head>
+<body id="todoLoad">
+    <h1>ToDo's</h1>
+
+    <form>
+        <input type="text" id="item" placeholder="Enter ToDo Item Here">
+        <button type="button" id="addItem">+</button>
+    </form>
+
+    <div id="space"></div>
+
+    <table id="theList">
+        <tbody></tbody>
+    </table>
+    <table id="filters">
+        <tr>
+            <td id="taskQty" class="fltrButton">0 Items Left</button></td>
+            <td id="showAll"><button type="button" class="fltrButton" id="all">All</button></td>
+            <td id="showActive"><button type="button" class="fltrButton" id="active">Active</button></td>
+            <td id="showCompleted"><button type="button" class="fltrButton" id="complete">Completed</button></td>
+        </tr>
+    </table>
+
+    <script src="Scripts/todo.js" type="module">
+        window.document.onload = getFromBrowsherMemery();
+    </script>
+</body>
+</html>
