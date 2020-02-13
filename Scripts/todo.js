@@ -199,19 +199,23 @@ function markComplete(e, f) {
     itemList.forEach(function(item) {
         if(e == item.id && f === true){
             item.complete = true;
-            completedItems.push(item)
+            completedItems.push(item);
             itemList.splice(itemList.indexOf(item), 1);
             updateItemCount();
             saveToBrowserMemory();
             displayList();
-        } else if(e == item.id && f === false) {
-            item.complete = false;
-            itemList.push(item)
-            itemList.splice(completedItems.indexOf(item), 1);
-            updateItemCount();
-            saveToBrowserMemory();
-            displayList();
-        }      
+        }
+    })
+
+    completedItems.forEach(function(item){
+        if(e == item.id && f === false){
+        item.complete = false;
+        itemList.push(item);
+        completedItems.splice(completedItems.indexOf(item), 1);
+        updateItemCount();
+        saveToBrowserMemory();
+        displayList();
+        }   
     })
 }
 
