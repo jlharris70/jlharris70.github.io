@@ -16,23 +16,23 @@ function displayResults() {
         document.getElementById('results').value = bmi;
 
         if(bmi < 18.5){
-            document.getElementById('message').innerHTML = "Yo, bean pole. Hit the gym!";
+            document.getElementById('message').innerHTML = "You look like a bean pole. Hit the gym!";
         }
         else if(bmi < 24.9) {
             document.getElementById('message').innerHTML = "Looking good!";
         }
         else if(bmi < 29.9) {
-            document.getElementById('message').innerHTML = "That beer gut aint as sexy as you think it is!";
+            document.getElementById('message').innerHTML = "That muffin top aint as sexy as you think it is!";
         }
         else {
-            document.getElementById('message').innerHTML = "Fuck dude, you fat as hell!";
+            document.getElementById('message').innerHTML = "Dang dude, you fat!";
         }
     }
     else if (document.getElementById('female').checked == true){
         document.getElementById('results').value = bmi;
 
         if(bmi < 18.5){
-            document.getElementById('message').innerHTML = "Damn bitch, eat a sandwich!";
+            document.getElementById('message').innerHTML = "Come on girl, eat a sandwich!";
         }
         else if(bmi < 24.9) {
             document.getElementById('message').innerHTML = "Looking good!";
@@ -41,7 +41,7 @@ function displayResults() {
             document.getElementById('message').innerHTML = "Nice curves baby!";
         }
         else {
-            document.getElementById('message').innerHTML = "You know you are still sexy as hell!";
+            document.getElementById('message').innerHTML = "You know you are still sexy!";
         }
     }
     else {
