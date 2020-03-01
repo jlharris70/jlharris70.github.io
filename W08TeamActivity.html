@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 08 Team Activity</title>
+    <style>
+        li {list-style: none;}
+        #msg {color: red;}
+    </style>
+</head>
+<body>
+    
+    <header>
+        <button onclick="getPrev()">Prev</button>
+        <button onclick="getNext()">Next</button>
+        <br><br>
+        <div id="msg"></div>
+        <select name="search" id="searchCategory">
+            <option value="none" selected disabled hidden>Select</option>
+            <option value="films">Films</option>
+            <option value="people">People</option>
+            <option value="planets">Planets</option>
+            <option value="species">Species</option>
+            <option value="starships">Starships</option>
+            <option value="vehicles">Vehicles</option>
+        </select>
+        <input type="text" id="searchName">
+        <button onclick="setSearch()">Search</button>
+    </header>
+
+    <main>
+        <h1>Week 08 Team Activity</h1>
+        <section id=dispData>
+        </section>
+    </main>
+
+    <footer></footer>
+
+    <script src="Scripts/W08TeamActivity.js"></script>
+</body>
+</html>
