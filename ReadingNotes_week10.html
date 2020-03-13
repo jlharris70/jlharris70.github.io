@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 Reading Notes</title>
+    <style>
+         body {background-color: rgb(215, 241, 245);}
+         #comp {font-family: 'Courier New', Courier, monospace;}
+    </style>
+</head>
+<body>
+    <nav>
+        <a style="color: blue" href="week10.html">Back</a>
+    </nav>
+
+    <main>
+        <h1>Week 10 Reading Notes</h1>
+
+        <h2>Client-side form Validation</h2>
+        Before submitting data to the server, it is important to 
+        ensure all required form controls are filled out, in the 
+        correct format. This is called client-side form validation, 
+        and helps ensure data submitted matches the requirements set 
+        orth in the various form controls. 
+        <ul>
+            <p>
+                <h3>What is form validation</h3>
+                When you enter data, the browser and/or the web 
+                server will check to see that the data is in the
+                 correct format and within the constraints set by
+                  the application.
+                  <br><br>
+                  Validation done in the browser is called 
+                  client-side validation
+                  <br><br>
+                  If the information is correctly formatted, 
+                  the application allows the data to be submitted. 
+                  if the information isn't correctly formatted, 
+                  it gives the user an error message explaining 
+                  what needs to be corrected
+                  <br><br>
+                  Three main reasons to do form validation:
+                  <ul>
+                      <li>We want to get the right data, in the right format</li>
+                      <li>We want to protect our users' data</li>
+                      <li>We want to protect ourselves</li>
+                  </ul>
+
+                <h3>Different types of client-side validation</h3>
+                  <ul>
+                      <li<b>Built-in form validation</b> This validation generally doesn't require much JavaScript. </li>
+                      <li><b>JavaScript</b> validation is coded using JavaScript. This validation is completely customizable, 
+                        but you need to create it all (or use a library)</li>
+                  </ul>
+
+                <h3>Using built-in form validation</h3>
+                  <p>
+                    One of the most significant features of HTML5 form controls is the 
+                    ability to validate most user data without relying on JavaScript. 
+                    This is done by using validation attributes on form elements.
+                    <ul>
+                        <li style="font-family: 'Courier New', Courier, monospace;">required</li>
+                        <li style="font-family: 'Courier New', Courier, monospace;">minlength</li>
+                        <li style="font-family: 'Courier New', Courier, monospace;">maxlenth</li>
+                        <li style="font-family: 'Courier New', Courier, monospace;">min</li>
+                        <li style="font-family: 'Courier New', Courier, monospace;">max</li>
+                        <li style="font-family: 'Courier New', Courier, monospace;">pattern</li>
+                    </ul>
+                    <br>
+                    If the data entered in an form field follows all of the rules specified by the above attributes, 
+                    it is considered valid. If not, it is considered invalid.
+                  </p>
+
+                <h3>Validating forms using JavaScript</h3>
+                <p>
+                    You must use JavaScript if you want to take control over the look 
+                    and feel of native error messages or to deal with legacy browsers 
+                    that do not support HTML's built-in form validation.
+                </p>
+                    <h4>Implementing a customized error message</h4>
+                    <p>
+                        Automated messages have two drawbacks:
+                        <ul>
+                            <li>There is no standard way to change their look and feel with CSS</li>
+                            <li>They depend on the browser locale, which means that you can have a 
+                                page in one language but an error message displayed in another language</li>
+                        </ul>
+                        Customizing these error messages is one of the most 
+                        common uses cases of the constraint validation API.
+                    </p>
+
+                <h3>Validating forms without a built-in API</h3>
+                <P>
+                    In some cases, such as legacy browser support or custom controls, you won't be able 
+                    to or won't want to use the Constraint Validation API.You're still able to use 
+                    JavaScript to validate your form, but you'll just have to write your own.
+                    <br><br>
+                    To validate a form, ask yourself a few questions:
+                    <br><br>
+                    <h4>What kind of validation should I perform</h4>
+                    <p>
+                        You need to determine how to validate your data: string operations, type conversion, 
+                        regular expressions, and so on. It's up to you.
+                    </p>
+                    <h4>What should I do if the form doesn't validate?</h4>
+                    <p>
+                        This is clearly a UI matter. You have to decide how the form will behave. 
+                        Does the form send the data anyway? Should you highlight the fields that 
+                        are in error? Should you display error messages?
+                    </p>
+                    <h4>How can I help the user to correct invalid data?</h4>   
+                    <p>
+                        In order to reduce the user's frustration, it's very important 
+                        to provide as much helpful information as possible in order to 
+                        guide them in correcting their inputs. You should offer 
+                        up-front suggestions so they know what's expected, as well as 
+                        clear error messages.
+                    </p>                 
+                </P>
+
+            </p>    
+        </ul>
+
+
+
+
+
+        <h2>Using Fetch</h2>
+        <p>
+            The Fetch API provides a JavaScript interface for accessing and 
+            manipulating parts of the HTTP pipeline, such as requests and 
+            responses. It also provides a global 
+            <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span> 
+            method that provides 
+            an easy, logical way to fetch resources asynchronously across the network.
+            <br><br>
+            The <span style="font-family: 'Courier New', Courier, monospace;">fetch</span> 
+            specification differs from 
+            <span style="font-family: 'Courier New', Courier, monospace;">jQuery.ajax()</span> 
+            in three main ways:
+            <ul>
+                <li>
+                    The Promise returned from 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch</span>                    <b>won’t reject on HTTP error status</b> even if the response is 
+                    an HTTP 404 or 500. Instead, it will resolve normally 
+                    (with ok status set to false), and it will only reject on network 
+                    failure or if anything prevented the request from completing.
+                </li>
+                <li>
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>
+                    <b>won't receive cross-site cookies;</b>
+                    you can’t establish a cross site session using fetch.
+                    <span style="font-family: 'Courier New', Courier, monospace;">Set-Cookie </span>fetch()</span>
+                    headers from other sites are silently ignored.
+                </li>
+                <li>
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>
+                    <b>won’t send cookies,</b>
+                    unless you set the credentials init option.
+                </li>
+            </ul>
+        </p>
+        <ul>
+            <p>
+                <h3>Supplying request options</h3>
+                <p>
+                    The <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span> 
+                    method can optionally accept a second parameter, an 
+                    The <span style="font-family: 'Courier New', Courier, monospace;">init</span> 
+                     object that allows you to 
+                    control a number of different settings:
+                </p>
+                <h3>Sending a request with credentials included</h3>
+                <p>
+                    To cause browsers to send a request with credentials included, 
+                    even for a cross-origin call, 
+                    add 
+                    <span style="font-family: 'Courier New', Courier, monospace;"></span>credentials: 'include'</span>    
+                    to the 
+                    <span style="font-family: 'Courier New', Courier, monospace;">init</span>
+                    object you pass to the 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>
+                    method.
+                </p>
+    
+                <h3>Uploading JSON data</h3>
+                <p>Use 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>
+                    to POST JSON-encoded data.</p>
+    
+                <h3>Uploading a file</h3>
+                    <p>
+                        Files can be uploaded using an HTML 
+                        <span style="font-family: 'Courier New', Courier, monospace;">< input type="file" /> </span>
+                        input element,
+                        <span style="font-family: 'Courier New', Courier, monospace;">FormData()</span> 
+                        and 
+                        <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>.
+                    </p>
+                <h3>Uploading multiple files</h3>
+                <p>
+                    Files can be uploaded using an HTML 
+                    <span style="font-family: 'Courier New', Courier, monospace;">< input type="file" multiple /> </span>
+                    input element,
+                    <span style="font-family: 'Courier New', Courier, monospace;">FormData()</span> 
+                    and 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>.
+                </p>
+                <h3>Processing a text file line by line</h3>
+                <p>
+                    The chunks that are read from a response are not broken neatly at line boundaries 
+                    and are Uint8Arrays, not strings. If you want to fetch a text file and process 
+                    it line by line, it is up to you to handle these complications.
+                </p>
+                <h3>Checking that the fetch was successful</h3>
+                <p>
+                    A 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>
+                     promise will reject with a 
+                     <span style="font-family: 'Courier New', Courier, monospace;">TypeError</span>
+                    when a network error is 
+                    encountered or CORS is misconfigured on the server-side, although this 
+                    usually means permission issues or similar — a 404 does not constitute 
+                    a network error, for example. An accurate check for a successful 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>
+                    would include checking that the promise resolved, then checking that the 
+                    Response.ok 
+                    property has a value of true. 
+                </p>
+                <h3>Supplying your own request object</h3>
+                <p>
+                    Instead of passing a path to the resource you want to request 
+                    into the 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch() </span>
+                    call, you can create a request object using 
+                    the 
+                    <span style="font-family: 'Courier New', Courier, monospace;">Request()</span>
+                    constructor, and pass that in as a 
+                    <span style="font-family: 'Courier New', Courier, monospace;">fetch()</span>
+                    method argument
+                </p>
+                <h3></h3>
+    
+            </p>
+        </ul>
+        
+        <ul>
+            <p>
+                <h3>Headers</h3>
+                The 
+                <span style="font-family: 'Courier New', Courier, monospace;">Headers</span>
+                interface allows you to create your own headers object via the 
+                <span style="font-family: 'Courier New', Courier, monospace;">Headers()</span>
+                constructor. A headers object is a simple multi-map of names to values
+                <br><br>
+                A good use case for headers is checking whether the content type 
+                is correct before you process it further.
+                <ul>
+                    <h4>Guard</h4>
+                    Since headers can be sent in requests and received in responses, and have various l
+                    imitations about what information can and should be mutable, headers objects 
+                    have a guard property. This is not exposed to the Web, but it affects which 
+                    mutation operations are allowed on the headers object.
+                    <ul>
+                        <li><span id="comp">none:</span> defalut</li>
+                        <li><span id="comp">request:</span> guard for a headers object obtained from a request 
+                            <span id="comp">(Request.headers).</span></li>
+                        <li><span id="comp">request-no-cors:</span>  guard for a headers object obtained 
+                            from a request created with 
+                            <span id="comp">Request.mode no-cors.</span></li>
+                        <li><span id="comp">response:</span> guard for a Headers obtained from a response 
+                            <span id="comp">(Response.headers).</span></li>
+                        <li><span id="comp">immutable:</span> Mostly used for ServiceWorkers; 
+                            renders a headers object read-only.</li>
+                    </ul>
+                </ul>
+
+                <h3>Response objects</h3>
+                <p>
+                    The most common response properties you'll use are:
+                    <ul>
+                        <li><span id="comp">Response.status </span>
+                            An integer (default value 200) containing the response status code.</li>
+                        <li><span id="comp">Response.statusText </span>
+                            A string (default value "OK"), which corresponds to the HTTP status code message.</li>
+                        <li><span id="comp">Response.ok </span>
+                            seen in use above, this is a shorthand for checking that status is in the range 
+                            200-299 inclusive. This returns a Boolean.</li>
+                    </ul>
+                </p>
+
+                <h3>Body</h3>
+                <p>
+                    Both requests and responses may contain body data. A body is an instance of any of the following types:
+                    <ul>
+                        <li><span id="comp">ArrayBuffer</span></li>
+                        <li><span id="comp">ArrayBufferView</span> (Uint8Array and friends)</li>
+                        <li><span id="comp">Blob/</span>File</li>
+                        <li><span id="comp"></span>string</li>
+                        <li><span id="comp">URLSearchParams</span></li>
+                        <li><span id="comp">FormData</span></li>
+
+                    </ul>
+                    <br>
+                    The Body mixin defines the following methods to extract a body (implemented by both Request and Response). 
+                    These all return a promise that is eventually resolved with the actual content.
+                    <br><br>
+                    <ul>
+                        <li><span id="comp">arrayBuffer()</span></li>
+                        <li><span id="comp">blob()</span></li>
+                        <li><span id="comp">json()</span></li>
+                        <li><span id="comp">text()</span></li>
+                        <li><span id="comp">formData()</span></li>
+                    </ul>
+                    <br>
+                    This makes usage of non-textual data much easier than it was with XHR
+                </p>
+
+                <h3>Feature detection</h3>
+                <p>
+                    Fetch API support can be detected by checking for the existence of Headers, 
+                    Request, Response or fetch() on the Window or Worker scope. 
+                </p>
+                <h3>Polyfill</h3>
+                <p>
+                    To use Fetch in unsupported browsers, there is a Fetch Polyfill available 
+                    that recreates the functionality for non-supporting browsers.
+                </p>
+                <h3>Specifications</h3>
+                <ul>
+                    <a href="https://fetch.spec.whatwg.org/">Fetch Specifications</a>
+                </ul>
+
+                <h3>Browser compatibility</h3>
+                <ul>
+                    <a  href="https://github.com/mdn/browser-compat-data">Browser compatability on github</a>
+                </ul>
+
+            </p>
+        </ul>
+
+
+    </main>
+    
+</body>
+</html>
