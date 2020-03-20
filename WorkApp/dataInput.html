@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="James Harris">
+    <title>Input PM Data</title>
+    <link rel="stylesheet" href="Styles/style.css">
+</head>
+<body> 
+    <nav>
+        <a style="color: blue" href="dataInput.html">Back</a>
+    </nav>
+
+    <main>
+        <div id="btnMenus" style="visibility: hidden;">
+        <div id="buttonMenu1">
+            <button id="belt">Belt</button>
+            <button id="kpin">K-Pin</button>
+            <button id="n2h">N2 Height</button>
+            <button id="flow">N2 Flow</button>
+        </div>
+
+        <div id="buttonMenu2">
+            <button id="micro"">Clear All</button>
+            <button id="map">Mapper</button>
+            <button id="ee">Laser Jig</button>
+            <button id="align">Aligner</button>
+        </div>
+        </div>
+
+        <div id="start" style="visibility: visible;">
+            <h1>Enter Tool Id</h1>
+            <input type="text" id="toolID">
+            <button id="title">Enter</button>
+        </div>
+            <span id="container"></span>
+            <div id="div0"></div>
+            <div id="div1"></div>
+            <div id="div2"></div>
+            <div id="div3"></div>
+
+        <div class="btns" style="padding-left: 52px;; visibility: hidden;" id="showBtn">
+            <button id="found">"As Found"</button>
+            <button id="left">"As Left"</button>
+            <br>
+        </div>
+    </ul>  
+
+    <script src="./Scripts/display.js" type="module"></script>
+    </main>
+</body>
+</html>
