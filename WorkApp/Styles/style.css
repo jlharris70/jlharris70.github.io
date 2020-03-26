@@ -114,6 +114,10 @@ div.btns {
         margin-right: 15%;
 }
 
+#div2 {
+    text-align: center;
+}
+
 .laserJig {
     border-collapse: none;
     border: 1px solid balck;
@@ -288,3 +292,5 @@ div.btns {
 #final_wou_lee {margin-left: 25px;}
 #final_wol_uee {margin-left: 45px;}
 #final_wol_lee {margin-left: 25px;}
+
+#chk {margin-left: 5px;}
