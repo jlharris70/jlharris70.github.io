@@ -362,7 +362,143 @@ export function checkMapper(red, green) {
     }
 }
 
-export function checkEE() {}
+export function checkEE() {
+    clearCheckValues();
+    let failed = false;
+
+    // Get values from each field
+    const myArray = [];
+    const low_Z_Left = document.getElementById("lj_z_lft_low").value;
+    const low_Z_Right = document.getElementById("lj_z_rgt_low").value;
+    const low_Z_Back = document.getElementById("lj_z_bk_low").value;
+    const low_Z_Back_180 = document.getElementById("lj_z_bk180_low").value;
+    const up_Z_Left = document.getElementById("lj_z_lft_up").value;
+    const up_Z_Right = document.getElementById("lj_z_rgt_up").value;
+    const up_Z_Back = document.getElementById("lj_z_bk_up").value;
+    const up_Z_Back_180 = document.getElementById("lj_z_bk180_up").value;
+    const low_X_center = document.getElementById("lj_x_low").value;
+    const low_R_Extension =document.getElementById("lj_r_low").value;
+    const up_X_center = document.getElementById("lj_x_up").value;
+    const up_R_Extension = document.getElementById("lj_r_up").value;
+
+    // Add "Z" values to an array
+    myArray.push(low_Z_Left);
+    myArray.push(low_Z_Right);
+    myArray.push(low_Z_Back);
+    myArray.push(low_Z_Back_180);
+    myArray.push(up_Z_Left);
+    myArray.push(up_Z_Right);
+    myArray.push(up_Z_Back);
+    myArray.push(up_Z_Back_180);
+
+    // Find "Z" min and max
+    const min = Math.min(...myArray);
+    const max = Math.max(...myArray);
+    const diff = max - min;
+
+    if(low_Z_Left < -10 || low_Z_Left > 10){
+        document.getElementById("lj_z_lft_low").style.background = "red";
+        document.getElementById("lj_z_lft_low").style.color = "white";
+        document.getElementById("err1").innerHTML = "Value must be +/-10";
+        document.getElementById("err1").style.color = "red";
+        document.getElementById("err1").style.marginLeft = "5px"
+    }
+    else{
+        document.getElementById("lj_z_lft_low").style.background = "limegreen";
+        document.getElementById("lj_z_lft_low").style.color = "black";
+        document.getElementById("err1").innerHTML = "";
+    }
+
+    if(low_Z_Right < -10 || low_Z_Right > 10 ){
+        document.getElementById("lj_z_rgt_low").style.background = "red";
+        document.getElementById("lj_z_rgt_low").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_z_rgt_low").style.background = "limegreen";
+        document.getElementById("lj_z_rgt_low").style.color = "black";
+    }
+    if(low_Z_Back < -10 || low_Z_Back > 10 ){
+        document.getElementById("lj_z_bk_low").style.background = "red";
+        document.getElementById("lj_z_bk_low").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_z_bk_low").style.background = "limegreen";
+        document.getElementById("lj_z_bk_low").style.color = "black";
+    }
+    if(low_Z_Back_180 < -20 || low_Z_Back_180 > 20 ){
+        document.getElementById("lj_z_bk180_low").style.background = "red";
+        document.getElementById("lj_z_bk180_low").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_z_bk180_low").style.background = "limegreen";
+        document.getElementById("lj_z_bk180_low").style.color = "black";
+    }
+    if(low_X_center < -5 || low_X_center > 5 ){
+        document.getElementById("lj_x_low").style.background = "red";
+        document.getElementById("lj_x_low").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_x_low").style.background = "limegreen";
+        document.getElementById("lj_x_low").style.color = "black";
+    }
+    if(low_R_Extension < -5 || low_R_Extension > 5 ){
+        document.getElementById("lj_r_low").style.background = "red";
+        document.getElementById("lj_r_low").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_r_low").style.background = "limegreen";
+        document.getElementById("lj_r_low").style.color = "black";
+    }
+    if(up_Z_Left < -10 || up_Z_Left > 10 ){
+        document.getElementById("lj_z_lft_up").style.background = "red";
+        document.getElementById("lj_z_lft_up").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_z_lft_up").style.background = "limegreen";
+        document.getElementById("lj_z_lft_up").style.color = "black";
+    }
+    if(up_Z_Right < -10 || up_Z_Right > 10 ){
+        document.getElementById("lj_z_rgt_up").style.background = "red";
+        document.getElementById("lj_z_rgt_up").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_z_rgt_up").style.background = "limegreen";
+        document.getElementById("lj_z_rgt_up").style.color = "black";
+    }
+    if(up_Z_Back < -10 || up_Z_Back > 10 ){
+        document.getElementById("lj_z_bk_up").style.background = "red";
+        document.getElementById("lj_z_bk_up").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_z_bk_up").style.background = "limegreen";
+        document.getElementById("lj_z_bk_up").style.color = "black";
+    }
+    if(up_Z_Back_180 < -20 || up_Z_Back_180 > 20 ){
+        document.getElementById("lj_z_bk180_up").style.background = "red";
+        document.getElementById("lj_z_bk180_up").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_z_bk180_up").style.background = "limegreen";
+        document.getElementById("lj_z_bk180_up").style.color = "black";
+    }
+    if(up_X_center < -5 || up_X_center > 5 ){
+        document.getElementById("lj_x_up").style.background = "red";
+        document.getElementById("lj_x_up").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_x_up").style.background = "limegreen";
+        document.getElementById("lj_x_up").style.color = "black";
+    }
+    if(up_R_Extension < -5 || up_R_Extension > 5 ){
+        console.log(up_R_Extension)
+        document.getElementById("lj_r_up").style.background = "red";
+        document.getElementById("lj_r_up").style.color = "white";
+    }
+    else{
+        document.getElementById("lj_r_up").style.background = "limegreen";
+        document.getElementById("lj_r_up").style.color = "black";
+    }
+}
 
 export function checkAligner() {}
 

@@ -480,6 +480,11 @@ let testName = "";
         const node5 = document.createTextNode("");
         lj_z_lft_up.appendChild(node5);
 
+        const error1 = document.createElement("span");
+        error1.id = "err1";
+        const nodeZ = document.createTextNode("");
+        error1.appendChild(nodeZ);
+
         const lj_z_rgt = document.createElement("span");
         lj_z_rgt.id = "lj_z_rgt";
         const node6 = document.createTextNode("Z-Right");
@@ -605,6 +610,7 @@ let testName = "";
         element.appendChild(lj_z_lft);
         element.appendChild(lj_z_lft_low);
         element.appendChild(lj_z_lft_up);
+        element.appendChild(error1);
         element.appendChild(break2);
         element.appendChild(lj_z_rgt);
         element.appendChild(lj_z_rgt_low);
@@ -1120,4 +1126,4 @@ let testName = "";
 
         const element = document.getElementById("div0");
         element.appendChild(title1);
-    }
+      }
