@@ -18,10 +18,12 @@ th {
 .listRows {
     text-align: center;
     border-bottom: 1px solid black;
+    font-size: 20px;
 }
 .listLoc {
     text-align: left;
     border-bottom: 1px solid black;
+    font-size: 20px;
 }
 
 .flex-container {
@@ -90,6 +92,7 @@ nav {
 
 .leftColumn {
     font-size: 20px;
+    border-bottom: 1px solid black;
 }
 
 #space {

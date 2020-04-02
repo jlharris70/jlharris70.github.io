@@ -13,10 +13,15 @@ let nonPurge = false;
 
 function addNewItem() {
     let toolID = document.getElementById('item').value;
+    toolID = toolID.toUpperCase();
     let location = document.getElementById('location').value;
     let contamination = document.querySelector('input[name = "contamination"]:checked').value;
     let prodType = document.querySelector('input[name = "production"]:checked').value;
     let purgeType = document.querySelector('input[name = "n2"]:checked').value;
+
+    document.querySelector('input[name = "contamination"]:checked').checked = false;
+    document.querySelector('input[name = "production"]:checked').checked = false;
+    document.querySelector('input[name = "n2"]:checked').checked = false;
     
     const tool = new Tool(toolID);
     tool.location = location;
@@ -53,8 +58,11 @@ function addNewItem() {
         saveToBrowserMemory();
         updateItemCount();
         document.getElementById('item').value = "";
+        document.getElementById('location').value = "";
         displayList(itemList);
-    }    
+        showEdit();
+    }  
+    
 }
 
 function saveToBrowserMemory() {
@@ -110,12 +118,21 @@ function showAll() {
     
     // Change bacground color of 'All' button to gray and others to white
     document.getElementById('all').style.backgroundColor = "dodgerblue";
-    document.getElementById('active').style.backgroundColor = "lightblue";
-    document.getElementById('TW').style.backgroundColor = "lightblue";
     document.getElementById('Cu').style.backgroundColor = "lightblue";
+    document.getElementById('TW').style.backgroundColor = "lightblue";
+    document.getElementById('active').style.backgroundColor = "lightblue";
     document.getElementById('NC').style.backgroundColor = "lightblue";
     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
     document.getElementById('Purge').style.backgroundColor = "lightblue";
+
+    // Show filter buttons
+    document.getElementById('all').style.display = "inline";
+    document.getElementById('Cu').style.display = "inline";
+    document.getElementById('active').style.display = "inline";
+    document.getElementById('Purge').style.display = "inline";
+    document.getElementById('NC').style.display = "inline";
+    document.getElementById('TW').style.display = "inline";
+    document.getElementById('NonPurge').style.display = "inline";
     
     // Read itemList and display all fo the items
     let html = `
@@ -140,7 +157,7 @@ function showAll() {
                 <td class="listRows">${tool.cu}</td>
                 <td class="listRows">${tool.prod}</td>
                 <td class="listRows">${tool.purge}</td>
-                <td class="listRows">Bay ${tool.location}</td>
+                <td class="listLoc">Bay ${tool.location}</td>
                 <td class="rmvBtn">
                     <button type="button" id="removeItem" value="${tool.id}">X</button>
                 </td>
@@ -152,102 +169,6 @@ function showAll() {
     document.getElementById('listBody').innerHTML = html;
     console.log("showAll() called");
 }
-
-// function showProd() {
-//     const newArray = [];
-//     if(newArray.length === 0){console.log("Array is empty")};
-
-//     filter = 3;
-//     // Change bacground color of 'All' button to gray and others to white
-//     document.getElementById('all').style.backgroundColor = "lightblue";
-//     document.getElementById('active').style.backgroundColor = "dodgerblue";
-//     document.getElementById('TW').style.backgroundColor = "lightblue";
-//     document.getElementById('Cu').style.backgroundColor = "lightblue";
-//     document.getElementById('NC').style.backgroundColor = "lightblue";
-//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-//     document.getElementById('Purge').style.backgroundColor = "lightblue";
-    
-//     // Read itemList and display all fo the items
-//     let html = `
-//         <tr>
-//             <th>Tool ID</th>
-//             <th>Cu</th>
-//             <th>Prod</th>
-//             <th>Purge</th>
-//             <th>Location</th>
-//         </tr>
-//     `;
-    
-//     itemList.forEach(
-//         tool => {
-//             if(tool.prod == true){
-//         html += 
-//            ` <tr class="listRows">
-//                 <td class="listRows">
-//                     ${tool.content}
-//                 </td>
-//                 <td class="listRows">${tool.cu}</td>
-//                 <td class="listRows">${tool.prod}</td>
-//                 <td class="listRows">${tool.purge}</td>
-//                 <td class="listLoc">Bay ${tool.location}</td>
-//                 <td class="rmvBtn">
-//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
-//                 </td>
-//             </tr>`;
-//             }
-//         }  
-//     );
-
-//     document.getElementById('listBody').innerHTML = html;
-//     console.log("showProd() called");
-// }
-
-// function showTW() {
-//     filter = 3;
-//     // Change bacground color of 'All' button to gray and others to white
-//     document.getElementById('all').style.backgroundColor = "lightblue";
-//     document.getElementById('active').style.backgroundColor = "lightblue";
-//     document.getElementById('TW').style.backgroundColor = "dodgerblue";
-//     document.getElementById('Cu').style.backgroundColor = "lightblue";
-//     document.getElementById('NC').style.backgroundColor = "lightblue";
-//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-//     document.getElementById('Purge').style.backgroundColor = "lightblue";
-
-    
-//     // Read itemList and display all fo the items
-//     let html = `
-//         <tr>
-//             <th>Tool ID</th>
-//             <th>Cu</th>
-//             <th>Prod</th>
-//             <th>Purge</th>
-//             <th>Location</th>
-//         </tr>
-//     `;
-    
-//     itemList.forEach(
-//         tool => {
-//             if(tool.prod == false){
-//         html += 
-//            ` <tr class="listRows">
-//                 <td class="listRows">
-//                     ${tool.content}
-//                 </td>
-//                 <td class="listRows">${tool.cu}</td>
-//                 <td class="listRows">${tool.prod}</td>
-//                 <td class="listRows">${tool.purge}</td>
-//                 <td class="listRows">Bay ${tool.location}</td>
-//                 <td class="rmvBtn">
-//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
-//                 </td>
-//             </tr>`;
-//             }
-//         }  
-//     );
-
-//     document.getElementById('listBody').innerHTML = html;
-//     console.log("showTW() called");
-// }
 
 /*************************************************************************************/
 
@@ -979,7 +900,7 @@ function displayTools() {
                 <td class="listRows">${tool.cu}</td>
                 <td class="listRows">${tool.prod}</td>
                 <td class="listRows">${tool.purge}</td>
-                <td class="listRows">Bay ${tool.location}</td>
+                <td class="listLoc">Bay ${tool.location}</td>
                 <td class="rmvBtn">
                     <button type="button" id="removeItem" value="${tool.id}">X</button>
                 </td>
@@ -992,207 +913,29 @@ function displayTools() {
     console.log("displayTools() called");
 }
 
-// function showCu() {
-//     filter = 3;
-//     // Change bacground color of 'All' button to gray and others to white
-//     document.getElementById('all').style.backgroundColor = "lightblue";
-//     document.getElementById('active').style.backgroundColor = "lightblue";
-//     document.getElementById('TW').style.backgroundColor = "lightblue";
-//     document.getElementById('Cu').style.backgroundColor = "dodgerblue";
-//     document.getElementById('NC').style.backgroundColor = "lightblue";
-//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-//     document.getElementById('Purge').style.backgroundColor = "lightblue";
-
-    
-//     // Read itemList and display all fo the items
-//     let html = `
-//         <tr>
-//             <th>Tool ID</th>
-//             <th>Cu</th>
-//             <th>Prod</th>
-//             <th>Purge</th>
-//             <th>Location</th>
-//         </tr>
-//     `;
-    
-//     itemList.forEach(
-//         tool => {
-//             if(tool.cu == true){
-//         html += 
-//            ` <tr class="listRows">
-//                 <td class="listRows">
-//                     ${tool.content}
-//                 </td>
-//                 <td class="listRows">${tool.cu}</td>
-//                 <td class="listRows">${tool.prod}</td>
-//                 <td class="listRows">${tool.purge}</td>
-//                 <td class="listRows">Bay ${tool.location}</td>
-//                 <td class="rmvBtn">
-//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
-//                 </td>
-//             </tr>`;
-//             }
-//         }  
-//     );
-
-//     document.getElementById('listBody').innerHTML = html;
-//     console.log("showCu() called");
-// }
-
-// function showNC() {
-//     filter = 3;
-//     // Change bacground color of 'All' button to gray and others to white
-//     document.getElementById('all').style.backgroundColor = "lightblue";
-//     document.getElementById('active').style.backgroundColor = "lightblue";
-//     document.getElementById('TW').style.backgroundColor = "lightblue";
-//     document.getElementById('Cu').style.backgroundColor = "lightblue";
-//     document.getElementById('NC').style.backgroundColor = "dodgerblue";
-//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-//     document.getElementById('Purge').style.backgroundColor = "lightblue";
-
-    
-//     // Read itemList and display all fo the items
-//     let html = `
-//         <tr>
-//             <th>Tool ID</th>
-//             <th>Cu</th>
-//             <th>Prod</th>
-//             <th>Purge</th>
-//             <th>Location</th>
-//         </tr>
-//     `;
-    
-//     itemList.forEach(
-//         tool => {
-//             if(tool.cu == false){
-//         html += 
-//            ` <tr class="listRows">
-//                 <td class="listRows">
-//                     ${tool.content}
-//                 </td>
-//                 <td class="listRows">${tool.cu}</td>
-//                 <td class="listRows">${tool.prod}</td>
-//                 <td class="listRows">${tool.purge}</td>
-//                 <td class="listRows">Bay ${tool.location}</td>
-//                 <td class="rmvBtn">
-//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
-//                 </td>
-//             </tr>`;
-//             }
-//         }  
-//     );
-
-//     document.getElementById('listBody').innerHTML = html;
-//     console.log("showNC() called");
-// }
-
-// function showPurge() {
-//     filter = 3;
-//     // Change bacground color of 'All' button to gray and others to white
-//     document.getElementById('all').style.backgroundColor = "lightblue";
-//     document.getElementById('active').style.backgroundColor = "lightblue";
-//     document.getElementById('TW').style.backgroundColor = "lightblue";
-//     document.getElementById('Cu').style.backgroundColor = "lightblue";
-//     document.getElementById('NC').style.backgroundColor = "lightblue";
-//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-//     document.getElementById('Purge').style.backgroundColor = "dodgerblue";
-
-    
-//     // Read itemList and display all fo the items
-//     let html = `
-//         <tr>
-//             <th>Tool ID</th>
-//             <th>Cu</th>
-//             <th>Prod</th>
-//             <th>Purge</th>
-//             <th>Location</th>
-//         </tr>
-//     `;
-    
-//     itemList.forEach(
-//         tool => {
-//             if(tool.purge == true){
-//         html += 
-//            ` <tr class="listRows">
-//                 <td class="listRows">
-//                     ${tool.content}
-//                 </td>
-//                 <td class="listRows">${tool.cu}</td>
-//                 <td class="listRows">${tool.prod}</td>
-//                 <td class="listRows">${tool.purge}</td>
-//                 <td class="listRows">Bay ${tool.location}</td>
-//                 <td class="rmvBtn">
-//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
-//                 </td>
-//             </tr>`;
-//             }
-//         }  
-//     );
-
-//     document.getElementById('listBody').innerHTML = html;
-//     console.log("showPurge() called");
-// }
-
-// function showNonPurge() {
-//     filter = 3;
-//     // Change bacground color of 'All' button to gray and others to white
-//     document.getElementById('all').style.backgroundColor = "lightblue";
-//     document.getElementById('active').style.backgroundColor = "lightblue";
-//     document.getElementById('TW').style.backgroundColor = "lightblue";
-//     document.getElementById('Cu').style.backgroundColor = "lightblue";
-//     document.getElementById('NC').style.backgroundColor = "lightblue";
-//     document.getElementById('NonPurge').style.backgroundColor = "dodgerblue";
-//     document.getElementById('Purge').style.backgroundColor = "lightblue";
-
-    
-//     // Read itemList and display all fo the items
-//     let html = `
-//         <tr>
-//             <th>Tool ID</th>
-//             <th>Cu</th>
-//             <th>Prod</th>
-//             <th>Purge</th>
-//             <th>Location</th>
-//         </tr>
-//     `;
-    
-//     itemList.forEach(
-//         tool => {
-//             if(tool.purge == false){
-//         html += 
-//            ` <tr class="listRows">
-//                 <td class="listRows">
-//                     ${tool.content}
-//                 </td>
-//                 <td class="listRows">${tool.cu}</td>
-//                 <td class="listRows">${tool.prod}</td>
-//                 <td class="listRows">${tool.purge}</td>
-//                 <td class="listRows">Bay ${tool.location}</td>
-//                 <td class="rmvBtn">
-//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
-//                 </td>
-//             </tr>`;
-//             }
-//         }  
-//     );
-
-//     document.getElementById('listBody').innerHTML = html;
-//     console.log("showNonPurge() called");
-// }
-
 function showEdit() {
     filter = 3;
     // Change bacground color of 'All' button to gray and others to white
     document.getElementById('all').style.backgroundColor = "dodgerblue";
     document.getElementById('active').style.backgroundColor = "lightblue";
+
+    // Hide fileter buttons
+    document.getElementById('all').style.display = "none";
+    document.getElementById('active').style.display = "none";
+    document.getElementById('Cu').style.display = "none";
+    document.getElementById('Purge').style.display = "none";
+    document.getElementById('TW').style.display = "none";
+    document.getElementById('NC').style.display = "none";
+    document.getElementById('NonPurge').style.display = "none";
     
     // Read itemList and display all fo the items
     let html = `
         <tr>
             <th>Tool ID</th>
-            <th>Cu/NC</th>
-            <th>Prod/TW</th>
+            <th>Cu</th>
+            <th>Prod</th>
             <th>Purge</th>
+            <th>Location</th>
         </tr>
     `;
     
@@ -1202,12 +945,11 @@ function showEdit() {
         html += 
             `
             <tr>
-                <td class="leftColumn">
-                    ${tool.content}
-                </td>
-                <td>NC</td>
-                <td>Prod</td>
-                <td>NonPurg</td>
+                <td class="leftColumn">${tool.content}</td>
+                <td class="listRows">${tool.cu}</td>
+                <td class="listRows">${tool.prod}</td>
+                <td class="listRows">${tool.purge}</td>
+                <td class="listRows">${tool.location}</td>
                 <td>
                     <button type="button" id="removeItem" value="${tool.id}">X</button>
                 </td>
