@@ -4,8 +4,6 @@
 
 let testName = "";
 
-     export function getTestName(){return testName;}
-
     function clearScreen() {
       document.getElementById("div1").innerHTML = "";
       document.getElementById("div2").innerHTML = "";
@@ -16,6 +14,11 @@ let testName = "";
       document.getElementById("chk").innerHTML = "";
       document.getElementById("showBtn").style.visibility = "hidden";
     }
+
+    export function getTestName(){
+      return testName;
+     }
+
     export function renderBelt(){
       // Clear div1 and make buttons visible
         clearScreen();
@@ -1111,7 +1114,8 @@ let testName = "";
 
       //Remove start div
         document.getElementById("start").style.display = "none";
-        document.getElementById("back").style.visibility = "visible";
+        document.getElementById("back").style.display = "inline";
+        document.getElementById('portfolio').style.display = "none";
 
 
       //Make PM buttons visible
