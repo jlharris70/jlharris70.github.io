@@ -4,6 +4,12 @@ let itemList = [];
 let completedItems = [];
 let filter = 1;
 let toggle = 1;
+let poduction = false;
+let testWafer = false;
+let copper = false;
+let nonCopper = false;
+let purge = false;
+let nonPurge = false;
 
 function addNewItem() {
     let toolID = document.getElementById('item').value;
@@ -16,13 +22,29 @@ function addNewItem() {
     tool.location = location;
     if(contamination === "NC"){
         tool.cu = false;
+        tool.nonCu = true;
+    }
+    else{
+        tool.cu = true;
+        tool.nonCu = false;
     }
     if(prodType === "TW"){
         tool.prod = false;
+        tool.tw = true;
+    }
+    else{
+        tool.prod = true;
+        tool.tw = false;
     }
     if(purgeType === "NonPurge"){
         tool.purge = false;
+        tool.noPurge = true;
     }
+    else{
+        tool.purge = true;
+        tool.noPurge = false;
+    }
+    
     console.table(tool);
     if(document.getElementById('item').value === ""){
         
@@ -31,14 +53,14 @@ function addNewItem() {
         saveToBrowserMemory();
         updateItemCount();
         document.getElementById('item').value = "";
-        displayList();
+        displayList(itemList);
     }    
 }
 
 function saveToBrowserMemory() {
     const json = JSON.stringify(itemList);
     localStorage.setItem("tool", json);
-    saveToFile(json)
+    //saveToFile(json)
 }
 
 function getFromBrowsherMemery() {
@@ -55,19 +77,6 @@ function getFromBrowsherMemery() {
     displayList();
     showAll();
     updateItemCount();
-}
-
-function saveToFile(json){
-    const fs = requre('fs');
-    fs.writeFile("test.txt", json, function(err){
-        if (err){
-            console.log(err);
-        }
-    });
-}
-
-function readFromFile(){
-
 }
 
 function removeItem(e) {
@@ -92,6 +101,13 @@ function removeItem(e) {
 
 function showAll() {
     filter = 3;
+    poduction = false;
+    testWafer = false;
+    copper = false;
+    nonCopper = false;
+    purge = false;
+    nonPurge = false;
+    
     // Change bacground color of 'All' button to gray and others to white
     document.getElementById('all').style.backgroundColor = "dodgerblue";
     document.getElementById('active').style.backgroundColor = "lightblue";
@@ -114,6 +130,7 @@ function showAll() {
     
     itemList.forEach(
         tool => {
+            tool.show = true;
             if(tool.complete == false){
         html += 
            ` <tr class="listRows">
@@ -123,7 +140,7 @@ function showAll() {
                 <td class="listRows">${tool.cu}</td>
                 <td class="listRows">${tool.prod}</td>
                 <td class="listRows">${tool.purge}</td>
-                <td class="listLoc">Bay ${tool.location}</td>
+                <td class="listRows">Bay ${tool.location}</td>
                 <td class="rmvBtn">
                     <button type="button" id="removeItem" value="${tool.id}">X</button>
                 </td>
@@ -136,81 +153,826 @@ function showAll() {
     console.log("showAll() called");
 }
 
-// Show Prod tools
-function showActive() {
-    filter = 3;
-    // Change bacground color of 'All' button to gray and others to white
-    document.getElementById('all').style.backgroundColor = "lightblue";
-    document.getElementById('active').style.backgroundColor = "dodgerblue";
-    document.getElementById('TW').style.backgroundColor = "lightblue";
-    document.getElementById('Cu').style.backgroundColor = "lightblue";
-    document.getElementById('NC').style.backgroundColor = "lightblue";
-    document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-    document.getElementById('Purge').style.backgroundColor = "lightblue";
-    
-    // Read itemList and display all fo the items
-    let html = `
-        <tr>
-            <th>Tool ID</th>
-            <th>Cu</th>
-            <th>Prod</th>
-            <th>Purge</th>
-            <th>Location</th>
-        </tr>
-    `;
-    
-    itemList.forEach(
-        tool => {
-            if(tool.prod == true){
-        html += 
-           ` <tr class="listRows">
-                <td class="listRows">
-                    ${tool.content}
-                </td>
-                <td class="listRows">${tool.cu}</td>
-                <td class="listRows">${tool.prod}</td>
-                <td class="listRows">${tool.purge}</td>
-                <td class="listLoc">Bay ${tool.location}</td>
-                <td class="rmvBtn">
-                    <button type="button" id="removeItem" value="${tool.id}">X</button>
-                </td>
-            </tr>`;
-            }
-        }  
-    );
+// function showProd() {
+//     const newArray = [];
+//     if(newArray.length === 0){console.log("Array is empty")};
 
-    document.getElementById('listBody').innerHTML = html;
-    console.log("showAll() called");
+//     filter = 3;
+//     // Change bacground color of 'All' button to gray and others to white
+//     document.getElementById('all').style.backgroundColor = "lightblue";
+//     document.getElementById('active').style.backgroundColor = "dodgerblue";
+//     document.getElementById('TW').style.backgroundColor = "lightblue";
+//     document.getElementById('Cu').style.backgroundColor = "lightblue";
+//     document.getElementById('NC').style.backgroundColor = "lightblue";
+//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
+//     document.getElementById('Purge').style.backgroundColor = "lightblue";
+    
+//     // Read itemList and display all fo the items
+//     let html = `
+//         <tr>
+//             <th>Tool ID</th>
+//             <th>Cu</th>
+//             <th>Prod</th>
+//             <th>Purge</th>
+//             <th>Location</th>
+//         </tr>
+//     `;
+    
+//     itemList.forEach(
+//         tool => {
+//             if(tool.prod == true){
+//         html += 
+//            ` <tr class="listRows">
+//                 <td class="listRows">
+//                     ${tool.content}
+//                 </td>
+//                 <td class="listRows">${tool.cu}</td>
+//                 <td class="listRows">${tool.prod}</td>
+//                 <td class="listRows">${tool.purge}</td>
+//                 <td class="listLoc">Bay ${tool.location}</td>
+//                 <td class="rmvBtn">
+//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
+//                 </td>
+//             </tr>`;
+//             }
+//         }  
+//     );
+
+//     document.getElementById('listBody').innerHTML = html;
+//     console.log("showProd() called");
+// }
+
+// function showTW() {
+//     filter = 3;
+//     // Change bacground color of 'All' button to gray and others to white
+//     document.getElementById('all').style.backgroundColor = "lightblue";
+//     document.getElementById('active').style.backgroundColor = "lightblue";
+//     document.getElementById('TW').style.backgroundColor = "dodgerblue";
+//     document.getElementById('Cu').style.backgroundColor = "lightblue";
+//     document.getElementById('NC').style.backgroundColor = "lightblue";
+//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
+//     document.getElementById('Purge').style.backgroundColor = "lightblue";
+
+    
+//     // Read itemList and display all fo the items
+//     let html = `
+//         <tr>
+//             <th>Tool ID</th>
+//             <th>Cu</th>
+//             <th>Prod</th>
+//             <th>Purge</th>
+//             <th>Location</th>
+//         </tr>
+//     `;
+    
+//     itemList.forEach(
+//         tool => {
+//             if(tool.prod == false){
+//         html += 
+//            ` <tr class="listRows">
+//                 <td class="listRows">
+//                     ${tool.content}
+//                 </td>
+//                 <td class="listRows">${tool.cu}</td>
+//                 <td class="listRows">${tool.prod}</td>
+//                 <td class="listRows">${tool.purge}</td>
+//                 <td class="listRows">Bay ${tool.location}</td>
+//                 <td class="rmvBtn">
+//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
+//                 </td>
+//             </tr>`;
+//             }
+//         }  
+//     );
+
+//     document.getElementById('listBody').innerHTML = html;
+//     console.log("showTW() called");
+// }
+
+/*************************************************************************************/
+
+function showProd(){
+
+    if(poduction == false) {
+        poduction = true;
+        testWafer = false;
+        document.getElementById('all').style.backgroundColor = "lightblue";
+        document.getElementById('active').style.backgroundColor = "dodgerblue";
+        document.getElementById('TW').style.backgroundColor = "lightblue";
+
+        itemList.forEach(
+            tool => {
+                tool.show = false;
+
+                if(tool.prod && !copper && !nonCopper && !purge && !nonPurge){
+                    tool.show = true;
+                }
+                else{
+                    if(tool.prod && copper && tool.cu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.prod && copper && tool.cu && purge && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.prod && copper && tool.cu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.prod && nonCopper && tool.nonCu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.prod && nonCopper && tool.nonCu && purge && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.prod && nonCopper && tool.nonCu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.prod && purge && tool.purge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.prod && purge && tool.purge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.prod && purge && tool.purge && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+
+                    if(tool.prod && nonPurge && tool.noPurge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.prod && nonPurge && tool.noPurge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.prod && nonPurge && tool.noPurge && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }
+    else {
+        document.getElementById('active').style.backgroundColor = "lightblue";
+        poduction = false;
+
+        itemList.forEach(
+            tool => {
+                if(!copper && !nonCopper && !poduction  && !testWafer  && !purge && !nonPurge){
+                    tool.show = true;
+                    showAll();
+                }
+                else{
+                    if(copper  && tool.cu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(copper  && tool.cu && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(copper  && tool.cu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(nonCopper  && tool.nonCu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(nonCopper  && tool.nonCu && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(nonCopper  && tool.nonCu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(purge && tool.purge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+
+                    if(nonPurge && tool.noPurge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(nonPurge && tool.noPurge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(nonPurge && tool.noPurge && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    } 
+
+    displayTools();
 }
 
-function showTW() {
-    filter = 3;
-    // Change bacground color of 'All' button to gray and others to white
-    document.getElementById('all').style.backgroundColor = "lightblue";
-    document.getElementById('active').style.backgroundColor = "lightblue";
-    document.getElementById('TW').style.backgroundColor = "dodgerblue";
-    document.getElementById('Cu').style.backgroundColor = "lightblue";
-    document.getElementById('NC').style.backgroundColor = "lightblue";
-    document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-    document.getElementById('Purge').style.backgroundColor = "lightblue";
+function showTW(){
+    if(testWafer == false) {
+        testWafer = true;
+        poduction = false;
+        document.getElementById('all').style.backgroundColor = "lightblue";
+        document.getElementById('TW').style.backgroundColor = "dodgerblue";
+        document.getElementById('active').style.backgroundColor = "lightblue";
 
-    
-    // Read itemList and display all fo the items
+        itemList.forEach(
+            tool => {
+                tool.show = false;
+
+                if(tool.tw && !copper && !nonCopper && !purge && !nonPurge){
+                    tool.show = true;
+                }
+                else{
+                    if(tool.tw && copper && tool.cu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.tw && copper && tool.cu && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(tool.tw && copper && tool.cu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.tw && nonCopper && tool.nonCu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.tw && nonCopper && tool.nonCu && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(tool.tw && nonCopper && tool.nonCu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.tw && purge && tool.purge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.tw && purge && tool.purge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.tw && purge && tool.purge && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+
+                    if(tool.tw && nonPurge && tool.noPurge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.tw && nonPurge && tool.noPurge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.tw && nonPurge && tool.noPurge&& nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+
+    }
+    else {
+        document.getElementById('TW').style.backgroundColor = "lightblue";
+        testWafer = false;
+
+        itemList.forEach(
+            tool => {
+                if(!copper && !nonCopper && !poduction  && !testWafer  && !purge && !nonPurge){
+                    tool.show = true;
+                    showAll();
+                }
+                else{
+                    if(copper  && tool.cu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(copper  && tool.cu && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(copper  && tool.cu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(nonCopper  && tool.nonCu && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(nonCopper  && tool.nonCu && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(nonCopper  && tool.nonCu && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(purge && tool.purge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+
+                    if(nonPurge && tool.noPurge && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(nonPurge && tool.noPurge && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(nonPurge && tool.noPurge && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }   
+
+    displayTools();
+}
+
+function showCu(){
+    if(copper == false) {
+        copper = true;
+        nonCopper = false;
+        document.getElementById('all').style.backgroundColor = "lightblue";
+        document.getElementById('Cu').style.backgroundColor = "dodgerblue";
+        document.getElementById('NC').style.backgroundColor = "lightblue";
+
+        itemList.forEach(
+            tool => {
+                tool.show = false;
+
+                if(tool.cu && !poduction  && !testWafer  && !purge && !nonPurge){
+                    tool.show = true;
+                }
+                else{
+                    if(tool.cu && poduction  && tool.prod && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.cu && poduction  && tool.prod && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(tool.cu && poduction  && tool.prod && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.cu && testWafer  && tool.tw && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.cu && testWafer  && tool.tw && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(tool.cu && testWafer  && tool.tw && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.cu && purge && tool.purge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.cu && purge && tool.purge && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.cu && purge && tool.purge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                    
+                    if(tool.cu && nonPurge && tool.noPurge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.cu && nonPurge && tool.noPurge && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.cu && nonPurge && tool.noPurge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }
+    else {
+        document.getElementById('Cu').style.backgroundColor = "lightblue";
+        copper = false;
+
+        itemList.forEach(
+            tool => {
+                if(!copper && !nonCopper && !poduction  && !testWafer  && !purge && !nonPurge){
+                    tool.show = true;
+                    showAll();
+                }
+                else{
+                    if(poduction  && tool.prod && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(testWafer  && tool.tw && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(purge && tool.purge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && poduction  && tool.prod){
+                        tool.show = true;   
+                    }
+                    if(purge && tool.purge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(nonPurge && tool.noPurge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                }
+            }
+        );
+    } 
+
+    displayTools();
+}
+
+function showNC(){
+    if(nonCopper == false) {
+        nonCopper = true;
+        copper = false;
+        document.getElementById('all').style.backgroundColor = "lightblue";
+        document.getElementById('NC').style.backgroundColor = "dodgerblue";
+        document.getElementById('Cu').style.backgroundColor = "lightblue";
+
+        itemList.forEach(
+            tool => {
+                tool.show = false;
+
+                if(tool.nonCu && !poduction  && !testWafer  && !purge && !nonPurge){
+                    tool.show = true;
+                }
+                else{
+                    if(tool.nonCu && poduction  && tool.prod && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && poduction  && tool.prod && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && poduction  && tool.prod && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.nonCu && testWafer  && tool.tw && !purge && !nonPurge){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && testWafer  && tool.tw && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && testWafer  && tool.tw && nonPurge && tool.noPurge){
+                        tool.show = true;
+                    }
+
+                    if(tool.nonCu && purge && tool.purge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && purge && tool.purge && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && purge && tool.purge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(tool.nonCu && nonPurge && tool.noPurge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && nonPurge && tool.noPurge && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.nonCu && nonPurge && tool.noPurge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }
+    else {
+        document.getElementById('NC').style.backgroundColor = "lightblue";
+        nonCopper = false;
+
+        itemList.forEach(
+            tool => {
+                if(!copper && !nonCopper && !poduction  && !testWafer  && !purge && !nonPurge){
+                    tool.show = true;
+                    showAll();
+                }
+                else{
+                    if(poduction  && tool.prod && !purge && ! nonPurge){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(testWafer  && tool.tw && !purge && ! nonPurge){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && purge && tool.purge){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(purge && tool.purge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(purge && tool.purge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(nonPurge && tool.noPurge && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(nonPurge && tool.noPurge && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(nonPurge && tool.noPurge && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }   
+
+    displayTools();
+}
+
+function showPurge(){
+    if(purge == false) {
+        purge = true;
+        nonPurge = false;
+        document.getElementById('all').style.backgroundColor = "lightblue";
+        document.getElementById('Purge').style.backgroundColor = "dodgerblue";
+        document.getElementById('NonPurge').style.backgroundColor = "lightblue";
+
+        itemList.forEach(
+            tool => {
+                tool.show = false;
+
+                if(tool.purge && !poduction  && !testWafer  && !copper && !nonCopper){
+                    tool.show = true;
+                }
+                else{
+                    if(tool.purge && poduction  && tool.prod && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.purge && poduction  && tool.prod && copper && tool.copper){
+                        tool.show = true;
+                    }
+                    if(tool.purge && poduction  && tool.prod && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+                    
+                    if(tool.purge && testWafer  && tool.tw && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.purge && testWafer  && tool.tw && copper && tool.copper){
+                        tool.show = true;
+                    }
+                    if(tool.purge && testWafer  && tool.tw && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+
+                    if(tool.purge && copper && tool.cu && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.purge && copper && tool.cu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.purge && copper && tool.cu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(tool.purge && nonCopper && tool.nonCu && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.purge && nonCopper && tool.nonCu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.purge && nonCopper && tool.nonCu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }
+    else {
+        document.getElementById('Purge').style.backgroundColor = "lightblue";
+        purge = false;
+
+        itemList.forEach(
+            tool => {
+                if(!copper && !nonCopper && !poduction  && !testWafer  && !copper && !nonCopper){
+                    tool.show = true;
+                    showAll();
+                }
+                else{
+                    if(poduction  && tool.prod && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(testWafer  && tool.tw && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(copper && tool.cu && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(copper && tool.cu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(copper && tool.cu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(nonCopper && tool.nonCu && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(nonCopper && tool.nonCu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(nonCopper && tool.nonCu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    } 
+
+    displayTools();
+}
+
+function showNonPurge(){
+    if(nonPurge == false) {
+        nonPurge = true;
+        purge = false;
+        document.getElementById('all').style.backgroundColor = "lightblue";
+        document.getElementById('NonPurge').style.backgroundColor = "dodgerblue";
+        document.getElementById('Purge').style.backgroundColor = "lightblue";
+
+        itemList.forEach(
+            tool => {
+                tool.show = false;
+
+                if(tool.noPurge && !poduction  && !testWafer && !copper && !nonCopper){
+                    tool.show = true;
+                }
+                else{
+                    if(tool.noPurge && poduction && tool.prod && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.nonPurge && poduction && tool.prod && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.noPurge && poduction && tool.prod && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+
+                    if(tool.noPurge && testWafer && tool.tw && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(tool.noPurge && testWafer && tool.tw && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(tool.noPurge && testWafer && tool.tw && nonCopper && tool.nonCopper){
+                        tool.show = true;
+                    }
+
+                    if(tool.noPurge && copper && tool.cu && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.noPurge && copper && tool.cu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.noPurge && copper && tool.cu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(tool.noPurge && nonCopper && tool.nonCu && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(tool.noPurge && nonCopper && tool.nonCu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(tool.noPurge && nonCopper && tool.nonCu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }
+    else {
+        document.getElementById('NonPurge').style.backgroundColor = "lightblue";
+        nonPurge = false;
+
+        itemList.forEach(
+            tool => {
+                if(!copper && !nonCopper && !poduction  && !testWafer  && !purge && !nonPurge){
+                    tool.show = true;
+                    showAll();
+                }
+                else{
+                    if(poduction  && tool.prod && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(poduction  && tool.prod && nonCopper && tool.nonCu){
+                        tool.show = true;
+                    }
+
+                    if(testWafer  && tool.tw && !copper && !nonCopper){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && copper && tool.cu){
+                        tool.show = true;
+                    }
+                    if(testWafer  && tool.tw && nonCopper && tool.nonCu){
+                        tool.show = true;
+                    }
+
+                    if(copper && tool.cu && !poduction && !testWafer){
+                        tool.show = true;
+                    }
+                    if(copper && tool.cu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(copper && tool.cu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+
+                    if(nonCopper && tool.nonCu && !poduction  && !testWafer){
+                        tool.show = true;
+                    }
+                    if(nonCopper && tool.nonCu && poduction  && tool.prod){
+                        tool.show = true;
+                    }
+                    if(nonCopper && tool.nonCu && testWafer && tool.tw){
+                        tool.show = true;
+                    }
+                }
+            }
+        );
+    }   
+
+    displayTools();
+}
+/*****************************************************************************************/
+
+function displayTools() {
     let html = `
-        <tr>
-            <th>Tool ID</th>
-            <th>Cu</th>
-            <th>Prod</th>
-            <th>Purge</th>
-            <th>Location</th>
-        </tr>
+    <tr>
+        <th>Tool ID</th>
+        <th>Cu</th>
+        <th>Prod</th>
+        <th>Purge</th>
+        <th>Location</th>
+    </tr>
     `;
-    
+
     itemList.forEach(
         tool => {
-            if(tool.prod == false){
+            if(tool.show){
         html += 
-           ` <tr class="listRows">
+        ` <tr class="listRows">
                 <td class="listRows">
                     ${tool.content}
                 </td>
@@ -227,196 +989,196 @@ function showTW() {
     );
 
     document.getElementById('listBody').innerHTML = html;
-    console.log("showAll() called");
+    console.log("displayTools() called");
 }
 
-function showCu() {
-    filter = 3;
-    // Change bacground color of 'All' button to gray and others to white
-    document.getElementById('all').style.backgroundColor = "lightblue";
-    document.getElementById('active').style.backgroundColor = "lightblue";
-    document.getElementById('TW').style.backgroundColor = "lightblue";
-    document.getElementById('Cu').style.backgroundColor = "dodgerblue";
-    document.getElementById('NC').style.backgroundColor = "lightblue";
-    document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-    document.getElementById('Purge').style.backgroundColor = "lightblue";
+// function showCu() {
+//     filter = 3;
+//     // Change bacground color of 'All' button to gray and others to white
+//     document.getElementById('all').style.backgroundColor = "lightblue";
+//     document.getElementById('active').style.backgroundColor = "lightblue";
+//     document.getElementById('TW').style.backgroundColor = "lightblue";
+//     document.getElementById('Cu').style.backgroundColor = "dodgerblue";
+//     document.getElementById('NC').style.backgroundColor = "lightblue";
+//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
+//     document.getElementById('Purge').style.backgroundColor = "lightblue";
 
     
-    // Read itemList and display all fo the items
-    let html = `
-        <tr>
-            <th>Tool ID</th>
-            <th>Cu</th>
-            <th>Prod</th>
-            <th>Purge</th>
-            <th>Location</th>
-        </tr>
-    `;
+//     // Read itemList and display all fo the items
+//     let html = `
+//         <tr>
+//             <th>Tool ID</th>
+//             <th>Cu</th>
+//             <th>Prod</th>
+//             <th>Purge</th>
+//             <th>Location</th>
+//         </tr>
+//     `;
     
-    itemList.forEach(
-        tool => {
-            if(tool.cu == true){
-        html += 
-           ` <tr class="listRows">
-                <td class="listRows">
-                    ${tool.content}
-                </td>
-                <td class="listRows">${tool.cu}</td>
-                <td class="listRows">${tool.prod}</td>
-                <td class="listRows">${tool.purge}</td>
-                <td class="listRows">Bay ${tool.location}</td>
-                <td class="rmvBtn">
-                    <button type="button" id="removeItem" value="${tool.id}">X</button>
-                </td>
-            </tr>`;
-            }
-        }  
-    );
+//     itemList.forEach(
+//         tool => {
+//             if(tool.cu == true){
+//         html += 
+//            ` <tr class="listRows">
+//                 <td class="listRows">
+//                     ${tool.content}
+//                 </td>
+//                 <td class="listRows">${tool.cu}</td>
+//                 <td class="listRows">${tool.prod}</td>
+//                 <td class="listRows">${tool.purge}</td>
+//                 <td class="listRows">Bay ${tool.location}</td>
+//                 <td class="rmvBtn">
+//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
+//                 </td>
+//             </tr>`;
+//             }
+//         }  
+//     );
 
-    document.getElementById('listBody').innerHTML = html;
-    console.log("showAll() called");
-}
+//     document.getElementById('listBody').innerHTML = html;
+//     console.log("showCu() called");
+// }
 
-function showNC() {
-    filter = 3;
-    // Change bacground color of 'All' button to gray and others to white
-    document.getElementById('all').style.backgroundColor = "lightblue";
-    document.getElementById('active').style.backgroundColor = "lightblue";
-    document.getElementById('TW').style.backgroundColor = "lightblue";
-    document.getElementById('Cu').style.backgroundColor = "lightblue";
-    document.getElementById('NC').style.backgroundColor = "dodgerblue";
-    document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-    document.getElementById('Purge').style.backgroundColor = "lightblue";
-
-    
-    // Read itemList and display all fo the items
-    let html = `
-        <tr>
-            <th>Tool ID</th>
-            <th>Cu</th>
-            <th>Prod</th>
-            <th>Purge</th>
-            <th>Location</th>
-        </tr>
-    `;
-    
-    itemList.forEach(
-        tool => {
-            if(tool.cu == false){
-        html += 
-           ` <tr class="listRows">
-                <td class="listRows">
-                    ${tool.content}
-                </td>
-                <td class="listRows">${tool.cu}</td>
-                <td class="listRows">${tool.prod}</td>
-                <td class="listRows">${tool.purge}</td>
-                <td class="listRows">Bay ${tool.location}</td>
-                <td class="rmvBtn">
-                    <button type="button" id="removeItem" value="${tool.id}">X</button>
-                </td>
-            </tr>`;
-            }
-        }  
-    );
-
-    document.getElementById('listBody').innerHTML = html;
-    console.log("showAll() called");
-}
-
-function showPurge() {
-    filter = 3;
-    // Change bacground color of 'All' button to gray and others to white
-    document.getElementById('all').style.backgroundColor = "lightblue";
-    document.getElementById('active').style.backgroundColor = "lightblue";
-    document.getElementById('TW').style.backgroundColor = "lightblue";
-    document.getElementById('Cu').style.backgroundColor = "lightblue";
-    document.getElementById('NC').style.backgroundColor = "lightblue";
-    document.getElementById('NonPurge').style.backgroundColor = "lightblue";
-    document.getElementById('Purge').style.backgroundColor = "dodgerblue";
+// function showNC() {
+//     filter = 3;
+//     // Change bacground color of 'All' button to gray and others to white
+//     document.getElementById('all').style.backgroundColor = "lightblue";
+//     document.getElementById('active').style.backgroundColor = "lightblue";
+//     document.getElementById('TW').style.backgroundColor = "lightblue";
+//     document.getElementById('Cu').style.backgroundColor = "lightblue";
+//     document.getElementById('NC').style.backgroundColor = "dodgerblue";
+//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
+//     document.getElementById('Purge').style.backgroundColor = "lightblue";
 
     
-    // Read itemList and display all fo the items
-    let html = `
-        <tr>
-            <th>Tool ID</th>
-            <th>Cu</th>
-            <th>Prod</th>
-            <th>Purge</th>
-            <th>Location</th>
-        </tr>
-    `;
+//     // Read itemList and display all fo the items
+//     let html = `
+//         <tr>
+//             <th>Tool ID</th>
+//             <th>Cu</th>
+//             <th>Prod</th>
+//             <th>Purge</th>
+//             <th>Location</th>
+//         </tr>
+//     `;
     
-    itemList.forEach(
-        tool => {
-            if(tool.purge == true){
-        html += 
-           ` <tr class="listRows">
-                <td class="listRows">
-                    ${tool.content}
-                </td>
-                <td class="listRows">${tool.cu}</td>
-                <td class="listRows">${tool.prod}</td>
-                <td class="listRows">${tool.purge}</td>
-                <td class="listRows">Bay ${tool.location}</td>
-                <td class="rmvBtn">
-                    <button type="button" id="removeItem" value="${tool.id}">X</button>
-                </td>
-            </tr>`;
-            }
-        }  
-    );
+//     itemList.forEach(
+//         tool => {
+//             if(tool.cu == false){
+//         html += 
+//            ` <tr class="listRows">
+//                 <td class="listRows">
+//                     ${tool.content}
+//                 </td>
+//                 <td class="listRows">${tool.cu}</td>
+//                 <td class="listRows">${tool.prod}</td>
+//                 <td class="listRows">${tool.purge}</td>
+//                 <td class="listRows">Bay ${tool.location}</td>
+//                 <td class="rmvBtn">
+//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
+//                 </td>
+//             </tr>`;
+//             }
+//         }  
+//     );
 
-    document.getElementById('listBody').innerHTML = html;
-    console.log("showAll() called");
-}
+//     document.getElementById('listBody').innerHTML = html;
+//     console.log("showNC() called");
+// }
 
-function showNonPurge() {
-    filter = 3;
-    // Change bacground color of 'All' button to gray and others to white
-    document.getElementById('all').style.backgroundColor = "lightblue";
-    document.getElementById('active').style.backgroundColor = "lightblue";
-    document.getElementById('TW').style.backgroundColor = "lightblue";
-    document.getElementById('Cu').style.backgroundColor = "lightblue";
-    document.getElementById('NC').style.backgroundColor = "lightblue";
-    document.getElementById('NonPurge').style.backgroundColor = "dodgerblue";
-    document.getElementById('Purge').style.backgroundColor = "lightblue";
+// function showPurge() {
+//     filter = 3;
+//     // Change bacground color of 'All' button to gray and others to white
+//     document.getElementById('all').style.backgroundColor = "lightblue";
+//     document.getElementById('active').style.backgroundColor = "lightblue";
+//     document.getElementById('TW').style.backgroundColor = "lightblue";
+//     document.getElementById('Cu').style.backgroundColor = "lightblue";
+//     document.getElementById('NC').style.backgroundColor = "lightblue";
+//     document.getElementById('NonPurge').style.backgroundColor = "lightblue";
+//     document.getElementById('Purge').style.backgroundColor = "dodgerblue";
 
     
-    // Read itemList and display all fo the items
-    let html = `
-        <tr>
-            <th>Tool ID</th>
-            <th>Cu</th>
-            <th>Prod</th>
-            <th>Purge</th>
-            <th>Location</th>
-        </tr>
-    `;
+//     // Read itemList and display all fo the items
+//     let html = `
+//         <tr>
+//             <th>Tool ID</th>
+//             <th>Cu</th>
+//             <th>Prod</th>
+//             <th>Purge</th>
+//             <th>Location</th>
+//         </tr>
+//     `;
     
-    itemList.forEach(
-        tool => {
-            if(tool.purge == false){
-        html += 
-           ` <tr class="listRows">
-                <td class="listRows">
-                    ${tool.content}
-                </td>
-                <td class="listRows">${tool.cu}</td>
-                <td class="listRows">${tool.prod}</td>
-                <td class="listRows">${tool.purge}</td>
-                <td class="listRows">Bay ${tool.location}</td>
-                <td class="rmvBtn">
-                    <button type="button" id="removeItem" value="${tool.id}">X</button>
-                </td>
-            </tr>`;
-            }
-        }  
-    );
+//     itemList.forEach(
+//         tool => {
+//             if(tool.purge == true){
+//         html += 
+//            ` <tr class="listRows">
+//                 <td class="listRows">
+//                     ${tool.content}
+//                 </td>
+//                 <td class="listRows">${tool.cu}</td>
+//                 <td class="listRows">${tool.prod}</td>
+//                 <td class="listRows">${tool.purge}</td>
+//                 <td class="listRows">Bay ${tool.location}</td>
+//                 <td class="rmvBtn">
+//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
+//                 </td>
+//             </tr>`;
+//             }
+//         }  
+//     );
 
-    document.getElementById('listBody').innerHTML = html;
-    console.log("showAll() called");
-}
+//     document.getElementById('listBody').innerHTML = html;
+//     console.log("showPurge() called");
+// }
+
+// function showNonPurge() {
+//     filter = 3;
+//     // Change bacground color of 'All' button to gray and others to white
+//     document.getElementById('all').style.backgroundColor = "lightblue";
+//     document.getElementById('active').style.backgroundColor = "lightblue";
+//     document.getElementById('TW').style.backgroundColor = "lightblue";
+//     document.getElementById('Cu').style.backgroundColor = "lightblue";
+//     document.getElementById('NC').style.backgroundColor = "lightblue";
+//     document.getElementById('NonPurge').style.backgroundColor = "dodgerblue";
+//     document.getElementById('Purge').style.backgroundColor = "lightblue";
+
+    
+//     // Read itemList and display all fo the items
+//     let html = `
+//         <tr>
+//             <th>Tool ID</th>
+//             <th>Cu</th>
+//             <th>Prod</th>
+//             <th>Purge</th>
+//             <th>Location</th>
+//         </tr>
+//     `;
+    
+//     itemList.forEach(
+//         tool => {
+//             if(tool.purge == false){
+//         html += 
+//            ` <tr class="listRows">
+//                 <td class="listRows">
+//                     ${tool.content}
+//                 </td>
+//                 <td class="listRows">${tool.cu}</td>
+//                 <td class="listRows">${tool.prod}</td>
+//                 <td class="listRows">${tool.purge}</td>
+//                 <td class="listRows">Bay ${tool.location}</td>
+//                 <td class="rmvBtn">
+//                     <button type="button" id="removeItem" value="${tool.id}">X</button>
+//                 </td>
+//             </tr>`;
+//             }
+//         }  
+//     );
+
+//     document.getElementById('listBody').innerHTML = html;
+//     console.log("showNonPurge() called");
+// }
 
 function showEdit() {
     filter = 3;
@@ -476,7 +1238,7 @@ function showEdit() {
     );
 
     document.getElementById('listBody').innerHTML = html;
-    console.log("showAll() called");
+    console.log("showEdit() called");
 }
 
 function showCompleted() {
@@ -518,9 +1280,7 @@ function updateItemCount() {
 }
 
 function displayList() {
-    // when updating table the removeItem button needs to have the value of
-    // id I think.  Figure this out...
-    if(filter == 1) {showAll();} //{showActive();}
+    if(filter == 1) {showAll();}
     else if(filter == 2) {showCompleted();}
     else {showAll();}    
 }
@@ -543,7 +1303,7 @@ function showForm() {
 
 document.querySelector('#addItem').addEventListener('click', addNewItem);
 document.querySelector('#showAll').addEventListener('click', showAll);
-document.querySelector('#showActive').addEventListener('click', showActive);
+document.querySelector('#showProd').addEventListener('click', showProd);
 document.querySelector('#showTW').addEventListener('click', showTW);
 document.querySelector('#showNonPurge').addEventListener('click', showNonPurge);
 document.querySelector('#showNC').addEventListener('click', showNC);
@@ -562,3 +1322,10 @@ document.getElementById('theList').addEventListener("click", function(e) {
 		removeItem(e.target.value);
     } 
 })
+
+
+/*****************************************************************
+ *  
+ *  Testing New Ideas
+ *  
+ *****************************************************************/
